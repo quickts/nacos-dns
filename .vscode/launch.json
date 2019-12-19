@@ -1,0 +1,54 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+            "name": "Project",
+            "type": "node",
+            "request": "launch",
+            "args": [
+                "--nolazy",
+                "-r", "tsconfig-paths/register",
+                "-r", "ts-node/register",
+                "${workspaceRoot}/src/index.ts"
+            ],
+            "sourceMaps": true,
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "File",
+            "type": "node",
+            "request": "launch",
+            "args": [
+                "--nolazy",
+                "-r", "tsconfig-paths/register",
+                "-r", "ts-node/register",
+                "${relativeFile}"
+            ],
+            "sourceMaps": true,
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Test file(Jest)",
+            "type": "node",
+            "request": "launch",
+            "args": [
+                "-r", "tsconfig-paths/register",
+                "-r", "ts-node/register",
+                "${workspaceRoot}/node_modules/jest/bin/jest",
+                "--runInBand",
+                "--rootDir=${fileDirname}",
+                "${fileBasename}"
+            ],
+            "sourceMaps": true,
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}

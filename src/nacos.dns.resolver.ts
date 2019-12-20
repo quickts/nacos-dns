@@ -42,7 +42,7 @@ export class NacosDnsResolver {
     }
 
     handler() {
-        return async (req, res) => {
+        return async (req: any, res: any) => {
             // req.id 2个字节(16bit)，标识字段，客户端会解析服务器返回的DNS应答报文，获取ID值与请求报文设置的ID值做比较，如果相同，则认为是同一个DNS会话
 
             // req.type 0表示查询报文，1表示响应报文;
@@ -70,6 +70,9 @@ export class NacosDnsResolver {
             // 5 : 拒绝(Refused) - 服务器由于设置的策略拒绝给出应答.比如，服务器不希望对某些请求者给出应答，或者服务器不希望进行某些操作（比如区域传送zone transfer）;
             // [6,15] : 保留值，暂未使用。
 
+            if (!this.naming_client) {
+                return res.end();
+            }
             this.naming_client.logger.log(format('%s:%s/%s %j', req.connection.remoteAddress, req.connection.remotePort, req.connection.type, req));
 
             const ttl = Number(process.env.CACHE_TTL);
@@ -105,40 +108,52 @@ export class NacosDnsResolver {
                         true
                     );
                     for (const instance of instances) {
-                        switch (q.type) {
-                            case 'A': {
-                                if (isIPv4(instance.ip)) {
-                                    res.answer.push({ name: q.name, type: q.type, class: q.class, ttl: ttl, data: instance.ip });
-                                } else {
-                                    const address = new Address6(instance.ip);
-                                    res.answer.push({ name: q.name, type: q.type, class: q.class, ttl: ttl, data: address.to4() });
-                                }
-                                break;
-                            }
-                            case 'AAAA': {
-                                if (isIPv6(instance.ip)) {
-                                    const address = new Address6(instance.ip);
-                                    const canonicalIp = address.canonicalForm();
-                                    res.answer.push({ name: q.name, type: q.type, class: q.class, ttl: ttl, data: canonicalIp });
-                                } else {
-                                    const address = Address6.fromAddress4(instance.ip);
-                                    const canonicalIp = address.canonicalForm();
-                                    res.answer.push({ name: q.name, type: q.type, class: q.class, ttl: ttl, data: canonicalIp });
-                                }
-                                break;
+                        if (q.type == 'A') {
+                            if (isIPv4(instance.ip)) {
+                                res.answer.push({ name: q.name, type: q.type, class: q.class, ttl: ttl, data: instance.ip });
+                            } else {
+                                const address = new Address6(instance.ip);
+                                res.answer.push({ name: q.name, type: q.type, class: q.class, ttl: ttl, data: address.to4() });
                             }
                         }
-                        res.additional.push({
-                            name: '_' + req.connection.type + '.' + q.name,
-                            type: 'SRV',
-                            ttl: ttl,
-                            data: {
-                                priority: 0,
-                                weight: instance.weight,
-                                port: instance.port,
-                                target: '.'
+                        if (q.type == 'AAAA') {
+                            if (isIPv6(instance.ip)) {
+                                const address = new Address6(instance.ip);
+                                const canonicalIp = address.canonicalForm();
+                                res.answer.push({ name: q.name, type: q.type, class: q.class, ttl: ttl, data: canonicalIp });
+                            } else {
+                                const address = Address6.fromAddress4(instance.ip);
+                                const canonicalIp = address.canonicalForm();
+                                res.answer.push({ name: q.name, type: q.type, class: q.class, ttl: ttl, data: canonicalIp });
                             }
-                        });
+                        }
+                        if (q.type == 'SRV') {
+                            res.answer.push({
+                                name: q.name,
+                                type: 'SRV',
+                                class: q.class,
+                                ttl: ttl,
+                                data: {
+                                    priority: 0,
+                                    weight: instance.weight,
+                                    port: instance.port,
+                                    target: instance.ip
+                                }
+                            });
+                        } else {
+                            res.additional.push({
+                                name: q.name,
+                                type: 'SRV',
+                                class: q.class,
+                                ttl: ttl,
+                                data: {
+                                    priority: 0,
+                                    weight: instance.weight,
+                                    port: instance.port,
+                                    target: instance.ip
+                                }
+                            });
+                        }
                     }
                 } catch (err) {
                     this.naming_client.logger.error(err);

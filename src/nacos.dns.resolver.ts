@@ -128,31 +128,39 @@ export class NacosDnsResolver {
                             }
                         }
                         if (q.type == 'SRV') {
-                            res.answer.push({
-                                name: q.name,
-                                type: 'SRV',
-                                class: q.class,
-                                ttl: ttl,
-                                data: {
-                                    priority: 0,
-                                    weight: instance.weight,
-                                    port: instance.port,
-                                    target: instance.ip
-                                }
-                            });
-                        } else {
-                            res.additional.push({
-                                name: q.name,
-                                type: 'SRV',
-                                class: q.class,
-                                ttl: ttl,
-                                data: {
-                                    priority: 0,
-                                    weight: instance.weight,
-                                    port: instance.port,
-                                    target: instance.ip
-                                }
-                            });
+                            if (isIPv4(instance.ip)) {
+                                const host_name = instance.ip + '.' + instance.port + '.' + q.name;
+                                res.answer.push({
+                                    name: '_udp' + req.connection.type + '.' + q.name,
+                                    type: 'SRV',
+                                    class: q.class,
+                                    ttl: ttl,
+                                    data: {
+                                        priority: 0,
+                                        weight: instance.weight,
+                                        port: instance.port,
+                                        target: host_name
+                                    }
+                                });
+                                res.additional.push({ name: host_name, type: 'A', class: q.class, ttl: ttl, data: instance.ip });
+                            } else {
+                                const address = new Address6(instance.ip);
+                                const canonicalIp = address.canonicalForm();
+                                const host_name = canonicalIp + '.' + instance.port + '.' + q.name;
+                                res.answer.push({
+                                    name: '_udp' + req.connection.type + '.' + q.name,
+                                    type: 'SRV',
+                                    class: q.class,
+                                    ttl: ttl,
+                                    data: {
+                                        priority: 0,
+                                        weight: instance.weight,
+                                        port: instance.port,
+                                        target: host_name
+                                    }
+                                });
+                                res.additional.push({ name: host_name, type: 'AAAA', class: q.class, ttl: ttl, data: canonicalIp });
+                            }
                         }
                     }
                 } catch (err) {

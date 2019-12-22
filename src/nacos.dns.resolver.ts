@@ -129,7 +129,7 @@ export class NacosDnsResolver {
                         }
                         if (q.type == 'SRV') {
                             if (isIPv4(instance.ip)) {
-                                const host_name = instance.ip + '.' + instance.port + '.' + q.name;
+                                const host_name = instance.ip + '.nacos';
                                 res.answer.push({
                                     name: '_udp' + req.connection.type + '.' + q.name,
                                     type: 'SRV',
@@ -146,7 +146,7 @@ export class NacosDnsResolver {
                             } else {
                                 const address = new Address6(instance.ip);
                                 const canonicalIp = address.canonicalForm();
-                                const host_name = canonicalIp + '.' + instance.port + '.' + q.name;
+                                const host_name = instance.ip + '.nacos';
                                 res.answer.push({
                                     name: '_udp' + req.connection.type + '.' + q.name,
                                     type: 'SRV',

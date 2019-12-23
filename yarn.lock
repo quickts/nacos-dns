@@ -286,6 +286,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@quickts/sleep@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/@quickts/sleep/download/@quickts/sleep-1.0.1.tgz#4b09e4a0ba1be22c12786f23c011b12eec1218dd"
+  integrity sha1-SwnkoLob4iwSeG8jwBGxLuwSGN0=
+
 "@types/babel__core@^7.1.0":
   version "7.1.3"
   resolved "https://registry.npm.taobao.org/@types/babel__core/download/@types/babel__core-7.1.3.tgz#e441ea7df63cd080dfcd02ab199e6d16a735fc30"
@@ -351,10 +356,10 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@24.0.23":
-  version "24.0.23"
-  resolved "https://registry.npm.taobao.org/@types/jest/download/@types/jest-24.0.23.tgz#046f8e2ade026fe831623e361a36b6fb9a4463e4"
-  integrity sha1-BG+OKt4Cb+gxYj42Gja2+5pEY+Q=
+"@types/jest@24.0.24":
+  version "24.0.24"
+  resolved "https://registry.npm.taobao.org/@types/jest/download/@types/jest-24.0.24.tgz#0f2f523dc77cc1bc6bef34eaf287ede887a73f05"
+  integrity sha1-Dy9SPcd8wbxr7zTq8oft6IenPwU=
   dependencies:
     jest-diff "^24.3.0"
 
@@ -368,10 +373,15 @@
   resolved "https://registry.npm.taobao.org/@types/json5/download/@types/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
-"@types/node@*", "@types/node@12.12.18":
+"@types/node@*":
   version "12.12.18"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.18.tgz#8d16634797d63c2af5bc647ce879f8de20b56469"
   integrity sha1-jRZjR5fWPCr1vGR86Hn43iC1ZGk=
+
+"@types/node@12.12.21":
+  version "12.12.21"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.21.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.12.21.tgz#aa44a6363291c7037111c47e4661ad210aded23f"
+  integrity sha1-qkSmNjKRxwNxEcR+RmGtIQre0j8=
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -1703,15 +1713,6 @@ invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-ip-address@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npm.taobao.org/ip-address/download/ip-address-6.1.0.tgz#3c3335bc90f22b3545a6eca5bffefabeb2ea6fd2"
-  integrity sha1-PDM1vJDyKzVFpuylv/76vrLqb9I=
-  dependencies:
-    jsbn "1.1.0"
-    lodash "^4.17.15"
-    sprintf-js "1.1.2"
-
 ip@1.1.5, ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.npm.taobao.org/ip/download/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -2309,11 +2310,6 @@ jest@24.9.0:
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha1-GSA/tZmR35jjoocFDUZHzerzJJk=
-
-jsbn@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npm.taobao.org/jsbn/download/jsbn-1.1.0.tgz#b01307cb29b618a1ed26ec79e911f803c4da0040"
-  integrity sha1-sBMHyym2GKHtJux56RH4A8TaAEA=
 
 jsbn@~0.1.0:
   version "0.1.1"
@@ -3635,11 +3631,6 @@ split@0.3:
   integrity sha1-zQ7qXmOiEd//frDwkcQTPi0N0o8=
   dependencies:
     through "2"
-
-sprintf-js@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.npm.taobao.org/sprintf-js/download/sprintf-js-1.1.2.tgz#da1765262bf8c0f571749f2ad6c26300207ae673"
-  integrity sha1-2hdlJiv4wPVxdJ8q1sJjACB65nM=
 
 sshpk@^1.7.0:
   version "1.16.1"

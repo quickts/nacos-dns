@@ -17,8 +17,8 @@
         "test:e2e": "jest --config ./test/jest-e2e.json"
     },
     "dependencies": {
+        "@quickts/sleep": "^1.0.1",
         "dotenv": "^8.2.0",
-        "ip-address": "^6.1.0",
         "log4js": "^6.1.0",
         "modern-dnsd": "^0.9.9",
         "nacos": "^2.0.0"

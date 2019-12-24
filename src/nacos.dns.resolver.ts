@@ -106,7 +106,7 @@ export class NacosDnsResolver {
                             const host_name = instance.ip + '.node.nacos';
 
                             res.answer.push({
-                                name: '_udp' + req.connection.type + '.' + q.name,
+                                name: q.name,
                                 type: q.type,
                                 class: q.class,
                                 ttl: ttl,

@@ -1,15 +1,7 @@
-FROM node:12.14.0
-
+FROM alpine AS builder
+RUN apk add --no-cache --update nodejs
 WORKDIR /home/nacos-dns
-
 COPY . .
-
-RUN yarn install
-
-RUN yarn build
-
-RUN mv .env_example .env
-
+RUN yarn install && yarn build && yarn install --production && mv .env_example .env 
 EXPOSE 15353
-
 CMD [ "node", "dist/index.js" ]

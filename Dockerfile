@@ -1,4 +1,4 @@
-FROM alpine AS builder
+FROM alpine
 RUN apk add --no-cache --update nodejs
 WORKDIR /home/nacos-dns
 COPY . .
